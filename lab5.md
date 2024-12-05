@@ -2,9 +2,7 @@
 #### Сбудышева Людмила А-18-22
 <br><br>
 
-
-
-<p style="color: pink; font-weight: bold; font-size: 20px;">Часть 1</p>
+<p style="color: pink; font-weight: bold; font-size: 20px;">Операционная система UNIX. Часть 1</p>
 
 ---
 
@@ -60,7 +58,7 @@ DESCRIPTION
        found, even if page exists in several sections.
 ```
 
-> Описание команды - очень большое, чтобы полностью его вставить в отчет, поэтому вот маленький кусочек.
+> Описание команды очень большое, чтобы полностью его вставить в отчет, поэтому вот маленький кусочек.
 
 ---
 
@@ -135,57 +133,542 @@ Hello World2
 #### 6. Создать файлы различных типов (саt, mкdіr, mknоd, ln). 
 
 ```
+┌──(kali㉿kali)-[~/Desktop]
+└─$ cat > A/A1/A21/file_cat.txt                                
+cat cat cat cat cat cat cat cat
+cat cat cat cat cat
 ```
+> Команда cat может быть использована для создания новых файлов.
+```
+┌──(kali㉿kali)-[~/Desktop]
+└─$ mkdir new_A 
+```
+> Команда mkdir (от "make directory") используется для создания новых каталогов.
+```
+┌──(kali㉿kali)-[~/Desktop]
+└─$ sudo mknod block b 1 2
+[sudo] password for kali: 
+Sorry, try again.
+[sudo] password for kali: 
 
+┌──(kali㉿kali)-[~/Desktop]
+└─$ sudo mknod char c 1 3  
+```
+> Команда mknod используется для создания специальных файлов, таких как блочные устройства (b) и символьные устройства (c).
+
+>  sudo mknod [имя файла] [b/c — тип файла] [основной номер устройства] [дополнительный номер устройства]
+
+```
+┌──(kali㉿kali)-[~/Desktop]
+└─$ echo "" > file_ln1.txt  
+                                                                                                                      
+┌──(kali㉿kali)-[~/Desktop]
+└─$ ln file_ln1.txt hardlink
+
+┌──(kali㉿kali)-[~/Desktop]
+└─$ ln file_ln1.txt symlink
+```
+> Команда ln используется для создания ссылок на файлы. Существует два типа ссылок: жесткие ссылки и символические ссылки.
+
+
+```
+┌──(kali㉿kali)-[~/Desktop]
+└─$ ls -l
+total 16
+drwxrwxr-x 4 kali kali 4096 Dec  3 13:02 A
+brw-r--r-- 1 root root 1, 2 Dec  4 16:11 block // блочное устройство
+crw-r--r-- 1 root root 1, 3 Dec  4 16:12 char // символьное устройство
+-rw-rw-r-- 3 kali kali    1 Dec  4 16:23 file_ln1.txt
+-rw-rw-r-- 3 kali kali    1 Dec  4 16:23 hardlink // жесткая ссылка на file_ln1.txt
+drwxrwxr-x 2 kali kali 4096 Dec  4 16:01 new_A
+lrwxrwxrwx 1 kali kali   12 Dec  4 16:26 symlink -> file_ln1.txt // символическая ссылка на file_ln1.txt
+```
 ---
 
 #### 7. Выполнить копирование, перемещение и удаление файлов и кaтaлoгов (cp, mv, rm, rmdir).
 
 ```
+┌──(kali㉿kali)-[~/Desktop]
+└─$ echo "" > file1.txt     
+                                                                                                                      
+┌──(kali㉿kali)-[~/Desktop]
+└─$ echo "" > file2.txt
+                                                                                                                      
+┌──(kali㉿kali)-[~/Desktop]
+└─$ cp file1.txt file2.txt new_A/
+
+┌──(kali㉿kali)-[~/Desktop]
+└─$ cp -r A/ new_A/ 
 ```
+> Команда cp (от "copy") используется для копирования файлов и каталогов.
+
+```
+┌──(kali㉿kali)-[~/Desktop]
+└─$ mv file1.txt new_file1.txt
+                                                                                                                      
+┌──(kali㉿kali)-[~/Desktop]
+└─$ mv new_file1.txt new_A/   
+                                                                                                                      
+┌──(kali㉿kali)-[~/Desktop]
+└─$ mv A/A2/ new_A/ 
+```
+> Команда mv (от "move") используется для перемещения или переименования файлов и каталогов.
+
+```
+┌──(kali㉿kali)-[~/Desktop]
+└─$ rm file2.txt
+                                                                                                                                                                                                                                            
+┌──(kali㉿kali)-[~/Desktop]
+└─$ rm -r new_A/A2/
+```
+> Команда rm (от "remove") используется для удаления файлов и каталогов.
+
+```
+┌──(kali㉿kali)-[~/Desktop]
+└─$ mkdir AA       
+                                                                                                                      
+┌──(kali㉿kali)-[~/Desktop]
+└─$ rmdir AA/ 
+```
+> Команда rmdir (от "remove directory") используется для удаления пустых каталогов.
 
 ---
 
 #### 8. Освоить команды: mкdіг, сhdіr, Іs, rm, рwd, раsswd в различных режимах (в частности, Іs в «коротком» (“‘Іs) и «длинном» (“‘Іs -аl') вариантах). 
 
 ```
+┌──(kali㉿kali)-[~/Desktop]
+└─$ mkdir -p A_new/A1_new                                                                                                              
+                                                                                                                     
+┌──(kali㉿kali)-[~/Desktop]
+└─$ mkdir -v AA   
+mkdir: created directory 'AA'
 ```
+> mkdir Создает новый каталог.\
+> -p (parents): Создает родительские каталоги, если они не существуют. \
+> -v (verbose): Показывает подробную информацию о создании каталогов.
 
+```                                                                                                                                                                                                                                    
+┌──(kali㉿kali)-[~/Desktop/new_A]
+└─$ cd .. # Переход в родительский каталог  
+                                                                                                                     
+┌──(kali㉿kali)-[~/Desktop]
+└─$ cd ~ # Переход в домашний каталог
+                                                                                                                     
+┌──(kali㉿kali)-[~]
+└─$ cd / # Переход в корневой каталог
+ ```
+ ```                                                                                                                  
+┌──(kali㉿kali)-[~/Desktop]
+└─$ ls -alh
+total 32K
+drwxr-xr-x  6 kali kali 4.0K Dec  5 11:19 .
+drwx------ 16 kali kali 4.0K Dec  5 11:16 ..
+drwxrwxr-x  3 kali kali 4.0K Dec  4 16:47 A
+drwxrwxr-x  2 kali kali 4.0K Dec  5 11:19 AA
+drwxrwxr-x  3 kali kali 4.0K Dec  5 11:18 A_new
+brw-r--r--  1 root root 1, 2 Dec  4 16:11 block
+crw-r--r--  1 root root 1, 3 Dec  4 16:12 char
+-rw-rw-r--  3 kali kali    1 Dec  4 16:23 file_ln1.txt
+-rw-rw-r--  3 kali kali    1 Dec  4 16:23 hardlink
+drwxrwxr-x  3 kali kali 4.0K Dec  4 16:52 new_A
+lrwxrwxrwx  1 kali kali   12 Dec  4 16:26 symlink -> file_ln1.txt
+
+┌──(kali㉿kali)-[~/Desktop]
+└─$ cd new_A 
+┌──(kali㉿kali)-[~/Desktop/new_A]
+└─$ ls -a  
+.  ..  A  file1.txt  file2.txt  new_file1.txt
+                                                                                                                     
+┌──(kali㉿kali)-[~/Desktop/new_A]
+└─$ ls -al 
+total 24
+drwxrwxr-x 3 kali kali 4096 Dec  4 16:52 .
+drwxr-xr-x 6 kali kali 4096 Dec  5 11:19 ..
+drwxrwxr-x 4 kali kali 4096 Dec  4 16:43 A
+-rw-rw-r-- 1 kali kali    1 Dec  4 16:41 file1.txt
+-rw-rw-r-- 1 kali kali    1 Dec  4 16:41 file2.txt
+-rw-rw-r-- 1 kali kali    1 Dec  4 16:41 new_file1.txt
+```
+> Команда ls ыводит список файлов и каталогов в текущем каталоге.\
+> -a (all): Показывает скрытые файлы (начинающиеся с точки).\
+> -l (long): Выводит подробную информацию о файлах и каталогах.\
+> -h (human-readable): Выводит размеры файлов в удобочитаемом формате (например, 1K, 234M, 2G). \
+> -R (recursive): Рекурсивно выводит содержимое всех подкаталогов.
+
+```
+┌──(kali㉿kali)-[~/Desktop]
+└─$ rm file2.txt
+                                                                                                                                                                                                                                            
+┌──(kali㉿kali)-[~/Desktop]
+└─$ rm -r new_A/A2/
+```
+>Команда rm удаляет файлы и каталоги. \
+>-i (interactive): Спрашивает перед удалением каждого файла.\
+> -f (force): Принудительно удаляет файлы без подтверждения.\
+>-v (verbose): Показывает подробную информацию о процессе удаления.
+
+```
+┌──(kali㉿kali)-[~/Desktop/new_A]
+└─$ pwd   
+/home/kali/Desktop/new_A
+```
+>Команда pwd выводит полный путь к текущему рабочему каталогу.
+
+```
+┌──(kali㉿kali)-[~/Desktop/new_A]
+└─$   sudo passwd -l kali
+passwd: password changed.
+                                                                                                                     
+┌──(kali㉿kali)-[~/Desktop/new_A]
+└─$   sudo passwd -u  kali
+passwd: password changed.
+```
+> Команда passwd изменяет пароль пользователя.\
+>-S (status): Показывает статус пароля пользователя.\
+> -l (lock): Блокирует пароль пользователя.\
+> -u (unlock): Разблокирует пароль пользователя.
 ---
 
 #### 9. Изучить способ определения типов файлов в UNІХ и ознакомиться с командой filе. Изучить специальные типы файлов (файлы устройств). 
 
 ```
-```
+┌──(kali㉿kali)-[~/Desktop/new_A]
+└─$ file file1.txt
+file1.txt: very short file (no magic)
 
+┌──(kali㉿kali)-[~/Desktop/new_A]
+└─$ file file2.txt
+file1.txt: ASCII text
+```
+>Команда file используется для определения типа файла на основе его содержимого. 
+```
+┌──(kali㉿kali)-[~/Desktop]
+└─$ file block   # блочное устройство
+block: block special (1/2)
+                                                                                                                     
+┌──(kali㉿kali)-[~/Desktop]
+└─$ file char  #символьное устройство
+char: character special (1/3)
+
+┌──(kali㉿kali)-[~/Desktop]
+└─$ file A # каталог 
+A: directory
+
+┌──(kali㉿kali)-[~/Desktop]
+└─$ file hardlink #жесткая ссылка
+hardlink: ASCII text
+                                                                                                                     
+┌──(kali㉿kali)-[~/Desktop]
+└─$ file symlink # символьная ссылка
+symlink: symbolic link to file_ln1.txt
+```
 ---
 
 #### 10.Изучить средства создания ссылок в файловой системе (команда In). 
+```
+┌──(kali㉿kali)-[~/Desktop]
+└─$ echo "" > file_ln1.txt  
+                                                                                                                      
+┌──(kali㉿kali)-[~/Desktop]
+└─$ ln file_ln1.txt hardlink
 
+┌──(kali㉿kali)-[~/Desktop]
+└─$ ln file_ln1.txt symlink
 ```
-```
+> Команда ln используется для создания ссылок на файлы. Существует два типа ссылок: жесткие ссылки и символические ссылки.
+
+Жесткая ссылка — это просто еще одно имя для существующего файла. Жесткая ссылка указывает на тот же самый индексный дескриптор (inode) в файловой системе, что и оригинальный файл.
+
+Символическая ссылка — это специальный файл, который указывает на другой файл или каталог по имени. Она содержит путь к целевому файлу или каталогу.
 
 ---
 
 #### 11. Выполнить просмотр информации о файлах, изменение прав доступа и владельца файлов (Іs, сhmоd, сhоwn, сhgrр, umаsk).
 
 ```
+┌──(kali㉿kali)-[~/Desktop]
+└─$ chmod 755 file_ln1.txt 
 ```
+> Команда chmod (от "change mode") используется для изменения прав доступа к файлам и каталогам.
 
+Режимы прав доступа могут быть заданы в двух форматах: символьном и числовом.
+
+Символьный формат позволяет указывать права доступа с использованием символов:\
+u (user): Владелец файла.\
+g (group): Группа файла.\
+o (others): Остальные пользователи.\
+a (all): Все пользователи (эквивалентно ugo).
+
+Операции\
+\+ (add): Добавляет права.\
+\- (remove): Убирает права.\
+= (set): Устанавливает права.
+
+Права\
+r (read): Право на чтение.\
+w (write): Право на запись.\
+x (execute): Право на выполнение.
+
+Числовой формат использует восьмеричные числа для задания прав доступа. \
+Каждое право имеет свое восьмеричное значение:\
+r (read): 4\
+w (write): 2\
+x (execute): 1
+
+Права для каждой категории пользователей (владелец, группа, остальные) суммируются.
+```
+┌──(kali㉿kali)-[~/Desktop]
+└─$ sudo chown kali2  file_ln1.txt
+```
+> Команда chown (от "change owner") используется для изменения владельца файла или каталога.
+
+```
+┌──(kali㉿kali)-[~/Desktop]
+└─$ groups kali
+kali : kali adm dialout cdrom floppy sudo audio dip video plugdev users netdev bluetooth scanner wireshark kaboxer vboxsf
+                                                                                                                       
+┌──(kali㉿kali)-[~/Desktop]
+└─$ groups kali2
+kali2 : kali2 users
+                                                                                                                       
+┌──(kali㉿kali)-[~/Desktop]
+└─$ sudo chgrp adm file_ln1.txt   
+                                                                                                                       
+┌──(kali㉿kali)-[~/Desktop]
+└─$ sudo chgrp users file_ln1.txt
+```
+>Команда chgrp (от "change group") используется для изменения группы файла или каталога.
+
+```                                                                                                                    
+┌──(kali㉿kali)-[~/Desktop]
+└─$ umask
+002
+                                                                                                                       
+┌──(kali㉿kali)-[~/Desktop]
+└─$ umask 022
+                                                                                                                       
+┌──(kali㉿kali)-[~/Desktop]
+└─$ umask    
+022
+```
+>Команда umask (от "user file-creation mode mask") используется для установки маски прав доступа, которая определяет, какие права будут запрещены при создании новых файлов и каталогов.
+
+Маска прав доступа задается в восьмеричном формате и состоит из трех цифр, каждая из которых соответствует правам доступа для владельца, группы и остальных пользователей.\
+r (read): 4\
+w (write): 2\
+x (execute): 1
+
+```
+┌──(kali㉿kali)-[~/Desktop]
+└─$ ls -l
+total 24
+drwxrwxr-x 3 kali  kali  4096 Dec  4 16:47 A
+drwxrwxr-x 2 kali  kali  4096 Dec  5 11:19 AA
+drwxrwxr-x 3 kali  kali  4096 Dec  5 11:18 A_new
+brw-r--r-- 1 root  root  1, 2 Dec  4 16:11 block
+crw-r--r-- 1 root  root  1, 3 Dec  4 16:12 char
+-rwxr-xr-x 3 kali2 users    8 Dec  5 12:17 file_ln1.txt
+-rwxr-xr-x 3 kali2 users    8 Dec  5 12:17 hardlink
+drwxrwxr-x 3 kali  kali  4096 Dec  5 12:09 new_A
+lrwxrwxrwx 1 kali  kali    12 Dec  4 16:26 symlink -> file_ln1.txt
+```
 ---
 
 #### 12. Назначить одному из файлов права. Убрать право “х", назначить "w". 
 
 ```
-```
+┌──(kali㉿kali)-[~/Desktop]
+└─$ sudo chmod a-x,u+w file_ln1.txt
 
+┌──(kali㉿kali)-[~/Desktop]
+└─$ ls -l file_ln1.txt 
+-rw-r--r-- 3 kali2 users 8 Dec  5 12:17 file_ln1.txt
+                                                      
+```
+Убрать право "х" (выполнение) для всех и назначить "w" (запись) для владельца.
+
+![](image.png)
 ---
 
 #### 13. Выполнить поиск файлов по различным критериям (fіnd).
 
+Поиск файлов по имени
 ```
+┌──(kali㉿kali)-[~/Desktop]
+└─$ find . -name file1.txt
+./new_A/file1.txt
+./new_A/A/A1/A11/file1.txt
+./A/A1/A11/file1.txt
+ ```
+ Поиск файлов по типу
+```                                                                                                                      
+┌──(kali㉿kali)-[~/Desktop]
+└─$ find . -type d        
+.
+./AA
+./A_new
+./A_new/A1_new
+./new_A
+./new_A/A
+./new_A/A/A2
+./new_A/A/A1
+./new_A/A/A1/A21
+./new_A/A/A1/A11
+./A
+./A/A1
+./A/A1/A21
+./A/A1/A11
+                                                                                                                       
+┌──(kali㉿kali)-[~/Desktop]
+└─$ find . -type f
+./hardlink
+./new_A/new_file1.txt
+./new_A/file1.txt
+./new_A/A/A1/A21/file_cat.txt
+./new_A/A/A1/A11/file1.txt
+./new_A/A/A1/A11/file2.txt
+./new_A/file2.txt
+./file_ln1.txt
+./A/A1/A21/file_cat.txt
+./A/A1/A11/file1.txt
+./A/A1/A11/file2.txt
+```
+Поиск файлов по размеру
+```
+┌──(kali㉿kali)-[~/Desktop]
+└─$ find . -size +1k 
+.
+./AA
+./A_new
+./A_new/A1_new
+./new_A
+./new_A/A
+./new_A/A/A2
+./new_A/A/A1
+./new_A/A/A1/A21
+./new_A/A/A1/A11
+./A
+./A/A1
+./A/A1/A21
+./A/A1/A11
+```
+Поиск файлов по дате изменения 
+```
+┌──(kali㉿kali)-[~/Desktop]
+└─$ find . -mtime -7
+.
+./block
+./AA
+./hardlink
+./symlink
+./A_new
+./A_new/A1_new
+./new_A
+./new_A/new_file1.txt
+./new_A/file1.txt
+./new_A/A
+./new_A/A/A2
+./new_A/A/A1
+./new_A/A/A1/A21
+./new_A/A/A1/A21/file_cat.txt
+./new_A/A/A1/A11
+./new_A/A/A1/A11/file1.txt
+./new_A/A/A1/A11/file2.txt
+./new_A/file2.txt
+./file_ln1.txt
+./A
+./A/A1
+./A/A1/A21
+./A/A1/A21/file_cat.txt
+./A/A1/A11
+./A/A1/A11/file1.txt
+./A/A1/A11/file2.txt
+./char
+```
+Поиск файлов по владельцу и группе
+
+```
+┌──(kali㉿kali)-[~/Desktop]
+└─$ find . -user kali
+.
+./AA
+./symlink
+./A_new
+./A_new/A1_new
+./new_A
+./new_A/new_file1.txt
+./new_A/file1.txt
+./new_A/A
+./new_A/A/A2
+./new_A/A/A1
+./new_A/A/A1/A21
+./new_A/A/A1/A21/file_cat.txt
+./new_A/A/A1/A11
+./new_A/A/A1/A11/file1.txt
+./new_A/A/A1/A11/file2.txt
+./new_A/file2.txt
+./A
+./A/A1
+./A/A1/A21
+./A/A1/A21/file_cat.txt
+./A/A1/A11
+./A/A1/A11/file1.txt
+./A/A1/A11/file2.txt
+                                                                                                                       
+┌──(kali㉿kali)-[~/Desktop]
+└─$ find . -user kali2
+./hardlink
+./file_ln1.txt
+
+┌──(kali㉿kali)-[~/Desktop]
+└─$ find . -group users
+./hardlink
+./file_ln1.txt
 ```
 
+Поиск файлов по правам доступа
+
+```
+┌──(kali㉿kali)-[~/Desktop]
+└─$ find . -perm -o+w
+./symlink
+                                                                                                                       
+┌──(kali㉿kali)-[~/Desktop]
+└─$ find . -perm -a+w
+./symlink
+                                                                                                                       
+┌──(kali㉿kali)-[~/Desktop]
+└─$ find . -perm -a+r
+.
+./block
+./AA
+./hardlink
+./symlink
+./A_new
+./A_new/A1_new
+./new_A
+./new_A/new_file1.txt
+./new_A/file1.txt
+./new_A/A
+./new_A/A/A2
+./new_A/A/A1
+./new_A/A/A1/A21
+./new_A/A/A1/A21/file_cat.txt
+./new_A/A/A1/A11
+./new_A/A/A1/A11/file1.txt
+./new_A/A/A1/A11/file2.txt
+./new_A/file2.txt
+./file_ln1.txt
+./A
+./A/A1
+./A/A1/A21
+./A/A1/A21/file_cat.txt
+./A/A1/A11
+./A/A1/A11/file1.txt
+./A/A1/A11/file2.txt
+./char
+```
 ---
 
 #### 14. Отработать совместное использование каталогов: одному из пользователей зайти в домашний каталог другого, просмотреть созданную им структуру. Отредактировать файлы. 
