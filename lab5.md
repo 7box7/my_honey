@@ -6,6 +6,10 @@
 
 ---
 
+#### 1. Войти в систему (логин и пароль, а также IP-адрес сервера следует  узнать у преподавателя). 
+
+![alt text](image-3.png)
+
 #### 2. Изменить пароль (раsswd). Выполнить просмотр информации о работающих пользователях (who). 
 
 ```                                                                                                            
@@ -81,7 +85,7 @@ Hello World
 ┌──(kali㉿kali)-[~/Desktop]
 └─$ echo "Hello World2" > A/A1/A11/file2.txt 
 ```
-
+![alt text](image.png)
 ---
 
 #### 5. Осуществить просмотр содержимого созданных файлов (саt, more). 
@@ -183,6 +187,7 @@ crw-r--r-- 1 root root 1, 3 Dec  4 16:12 char // символьное устро
 drwxrwxr-x 2 kali kali 4096 Dec  4 16:01 new_A
 lrwxrwxrwx 1 kali kali   12 Dec  4 16:26 symlink -> file_ln1.txt // символическая ссылка на file_ln1.txt
 ```
+![alt text](image-2.png)
 ---
 
 #### 7. Выполнить копирование, перемещение и удаление файлов и кaтaлoгов (cp, mv, rm, rmdir).
@@ -290,11 +295,12 @@ drwxrwxr-x 4 kali kali 4096 Dec  4 16:43 A
 -rw-rw-r-- 1 kali kali    1 Dec  4 16:41 file2.txt
 -rw-rw-r-- 1 kali kali    1 Dec  4 16:41 new_file1.txt
 ```
-> Команда ls ыводит список файлов и каталогов в текущем каталоге.\
-> -a (all): Показывает скрытые файлы (начинающиеся с точки).\
-> -l (long): Выводит подробную информацию о файлах и каталогах.\
-> -h (human-readable): Выводит размеры файлов в удобочитаемом формате (например, 1K, 234M, 2G). \
-> -R (recursive): Рекурсивно выводит содержимое всех подкаталогов.
+> Команда ls ыводит список файлов и каталогов в текущем каталоге.
+
+-a (all): Показывает скрытые файлы (начинающиеся с точки).\
+-l (long): Выводит подробную информацию о файлах и каталогах.\
+-h (human-readable): Выводит размеры файлов в удобочитаемом формате (например, 1K, 234M, 2G). \
+-R (recursive): Рекурсивно выводит содержимое всех подкаталогов.
 
 ```
 ┌──(kali㉿kali)-[~/Desktop]
@@ -303,10 +309,11 @@ drwxrwxr-x 4 kali kali 4096 Dec  4 16:43 A
 ┌──(kali㉿kali)-[~/Desktop]
 └─$ rm -r new_A/A2/
 ```
->Команда rm удаляет файлы и каталоги. \
->-i (interactive): Спрашивает перед удалением каждого файла.\
-> -f (force): Принудительно удаляет файлы без подтверждения.\
->-v (verbose): Показывает подробную информацию о процессе удаления.
+>Команда rm удаляет файлы и каталоги. 
+
+-i (interactive): Спрашивает перед удалением каждого файла.\
+-f (force): Принудительно удаляет файлы без подтверждения.\
+-v (verbose): Показывает подробную информацию о процессе удаления.
 
 ```
 ┌──(kali㉿kali)-[~/Desktop/new_A]
@@ -324,10 +331,12 @@ passwd: password changed.
 └─$   sudo passwd -u  kali
 passwd: password changed.
 ```
-> Команда passwd изменяет пароль пользователя.\
->-S (status): Показывает статус пароля пользователя.\
-> -l (lock): Блокирует пароль пользователя.\
-> -u (unlock): Разблокирует пароль пользователя.
+> Команда passwd изменяет пароль пользователя.
+
+-S (status): Показывает статус пароля пользователя.\
+-l (lock): Блокирует пароль пользователя.\
+-u (unlock): Разблокирует пароль пользователя.
+
 ---
 
 #### 9. Изучить способ определения типов файлов в UNІХ и ознакомиться с командой filе. Изучить специальные типы файлов (файлы устройств). 
@@ -673,21 +682,162 @@ lrwxrwxrwx 1 kali  kali    12 Dec  4 16:26 symlink -> file_ln1.txt
 
 #### 14. Отработать совместное использование каталогов: одному из пользователей зайти в домашний каталог другого, просмотреть созданную им структуру. Отредактировать файлы. 
 
+Создаем группу и добавляем в неё пользователей
+ ```                                                                                                                      
+┌──(kali㉿kali)-[~]
+└─$ sudo groupadd my_group2
+[sudo] password for kali: 
+                                                                                                                                                                                                           
+┌──(kali㉿kali)-[~]
+└─$ sudo usermod -aG my_group2 kali 
+                                                                                                                       
+┌──(kali㉿kali)-[~]
+└─$ sudo usermod -aG my_group2 kali2
+
+ ┌──(kali㉿kali)-[~]
+└─$ getent group my_group2
+my_group2:x:1003:kali,kali2
+ ```  
+Создадим каталог и изменим права доступа
+  ```  
+┌──(kali㉿kali)-[~]
+└─$ sudo mkdir /my_group_dir  
+
+┌──(kali㉿kali)-[~]
+└─$ sudo chown kali:my_group2 /my_group_dir
+                                                                                                                       
+┌──(kali㉿kali)-[~]
+└─$ sudo chmod 770 /my_group_dir 
+
+┌──(kali㉿kali)-[~]
+└─$ cd /my_group_dir 
+                                                                                                                       
+┌──(kali㉿kali)-[/my_group_dir]
+└─$ touch share_file.txt
+                                                                                                                       
+┌──(kali㉿kali)-[/my_group_dir]
+└─$ echo "wouwouwouwouwowu" > share_file.txt 
+
+┌──(kali㉿kali)-[/my_group_dir]
+└─$ sudo chown kali:my_group2 /my_group_dir/share_file.txt 
+                                                                                                                      
+┌──(kali㉿kali)-[/my_group_dir]
+└─$ ls -l          
+total 4
+-rw-rw-r-- 1 kali my_group2 17 Dec  6 02:11 share_file.txt
 ```
-```
+
+Войдем в систему под другим пользователем и изменим файл
+``` 
+┌──(kali㉿kali)-[/my_group_dir]
+└─$ su kali2                                              
+Password: 
+
+┌──(kali2㉿kali)-[/my_group_dir]
+└─$ ls -l                                                                                                              
+total 4
+-rw-rw-r-- 1 kali my_group2 17 Dec  6 02:11 share_file.txt
+
+┌──(kali2㉿kali)-[/my_group_dir]
+└─$ cat share_file.txt 
+wouwouwouwouwowu
+
+┌──(kali2㉿kali)-[/my_group_dir]
+└─$ echo "Change woowowow" > share_file.txt 
+
+┌──(kali2㉿kali)-[/my_group_dir]
+└─$ cat share_file.txt                                                                                                 
+Change woowowow
+
+┌──(kali2㉿kali)-[/my_group_dir]
+└─$ su kali                                                                                                            
+Password: 
+┌──(kali㉿kali)-[/my_group_dir]
+└─$ cat share_file.txt           
+Change woowowow
+
+```  
+
 
 ---
 
 #### 15. Удалить созданную структуру. 
 
 ```
+┌──(kali㉿kali)-[/my_group_dir]
+└─$ cd ~              
+                                                                                                                       
+┌──(kali㉿kali)-[~]
+└─$ rm /my_group_dir/share_file.txt 
+
+┌──(kali㉿kali)-[~]
+└─$ ls -l /my_group_dir
+total 0
 ```
 
 ---
 
 #### 16. Просмотреть список процессов и информацию о процессах, установить поправки приоритета (рs, nісе). 
 
+> Команда ps (от "process status") используется для вывода информации о процессах, запущенных в системе.
 ```
+┌──(kali㉿kali)-[~]
+└─$ ps au 
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root         724  3.8  7.7 547824 157036 tty7    Ssl+ Dec05  15:12 /usr/lib/xorg/Xorg :0 -seat seat0 -auth /var/run/lig
+root         726  0.0  0.0   6900  1920 tty1     Ss+  Dec05   0:00 /sbin/agetty -o -p -- \u --noclear - linux
+kali       81268  0.1  0.4  14348  8212 pts/0    Ss   Dec05   0:15 /usr/bin/zsh
+root      131672  0.6  6.1 466324 123700 tty8    Ssl+ 00:33   0:46 /usr/lib/xorg/Xorg :1 -seat seat0 -auth /var/run/lig
+kali2     182334  0.0  0.2   9096  5888 pts/1    Ss+  01:23   0:00 /bin/bash
+root      185006  0.0  0.2  11096  5852 pts/0    S    01:26   0:00 su - kali2
+kali2     185063  0.0  0.2   9152  5760 pts/0    S    01:26   0:00 -bash
+root      185494  0.0  0.2  11096  5904 pts/0    S    01:26   0:00 su - kali
+kali      185551  0.0  0.3  13768  7632 pts/0    S    01:26   0:01 -zsh
+root      187673  0.0  0.3  11096  6076 pts/0    S    01:28   0:00 su - kali2
+kali2     187722  0.0  0.2   9152  6016 pts/0    S    01:28   0:00 -bash
+root      205122  0.0  0.2  11072  6020 pts/0    S    01:46   0:00 su kali
+kali      205187  0.1  0.4  14208  8220 pts/0    S    01:46   0:04 zsh
+root      227290  0.0  0.2  11072  5764 pts/0    S    02:16   0:00 su kali2
+kali2     227347  0.0  0.2   9068  5760 pts/0    S    02:16   0:00 bash
+root      229086  0.0  0.2  11072  6020 pts/0    S    02:18   0:00 su kali
+kali      229135  0.0  0.4  14148  8148 pts/0    S    02:18   0:00 zsh
+root      230493  0.0  0.2  11072  5948 pts/0    S    02:20   0:00 su kali2
+kali2     230534  0.0  0.2   9068  5760 pts/0    S    02:20   0:00 bash
+root      234226  0.0  0.2  11072  5896 pts/0    S    02:23   0:00 su kali
+kali      234275  0.1  0.3  13600  7736 pts/0    S    02:23   0:01 zsh
+kali      248724  200  0.1   8292  3712 pts/0    R+   02:38   0:00 ps au
+
+┌──(kali㉿kali)-[~]
+└─$ ps af 
+    PID TTY      STAT   TIME COMMAND
+ 182334 pts/1    Ss+    0:00 /bin/bash
+  81268 pts/0    Ss     0:15 /usr/bin/zsh
+ 185006 pts/0    S      0:00  \_ su - kali2
+ 185063 pts/0    S      0:00      \_ -bash
+ 185494 pts/0    S      0:00          \_ su - kali
+ 185551 pts/0    S      0:01              \_ -zsh
+ 187673 pts/0    S      0:00                  \_ su - kali2
+ 187722 pts/0    S      0:00                      \_ -bash
+ 205122 pts/0    S      0:00                          \_ su kali
+ 205187 pts/0    S      0:04                              \_ zsh
+ 227290 pts/0    S      0:00                                  \_ su kali2
+ 227347 pts/0    S      0:00                                      \_ bash
+ 229086 pts/0    S      0:00                                          \_ su kali
+ 229135 pts/0    S      0:00                                              \_ zsh
+ 230493 pts/0    S      0:00                                                  \_ su kali2
+ 230534 pts/0    S      0:00                                                      \_ bash
+ 234226 pts/0    S      0:00                                                          \_ su kali
+ 234275 pts/0    S      0:02                                                              \_ zsh
+ 250474 pts/0    R+     0:00                                                                  \_ ps af
+ 131672 tty8     Ssl+   0:47 /usr/lib/xorg/Xorg :1 -seat seat0 -auth /var/run/lightdm/root/:1 -nolisten tcp vt8 -novtsw
+    724 tty7     Rsl+  15:24 /usr/lib/xorg/Xorg :0 -seat seat0 -auth /var/run/lightdm/root/:0 -nolisten tcp vt7 -novtsw
+    726 tty1     Ss+    0:00 /sbin/agetty -o -p -- \u --noclear - linux
+
+```
+> Команда nice используется для запуска процесса с заданным приоритетом. Приоритет задается в диапазоне от -20 (наивысший приоритет) до 19 (наименьший приоритет). По умолчанию процессы запускаются с приоритетом 0.
+
+```
+помогите дальше не получается
 ```
 
 ---
